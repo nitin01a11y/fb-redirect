@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Open in App</title>
-    <meta charset="UTF-8" />
-  </head>
-  <body>
-    <h3>Redirecting to the app...</h3>
-    <button onclick="redirectToApp()">Open in App</button>
+<head>
+  <title>Open in App</title>
+</head>
+<body>
+  <h3>Login complete</h3>
+  <p>Click the button below to return to the app:</p>
+  <button onclick="redirectToApp()">Open TunerFeed</button>
 
-    <script>
-      function redirectToApp() {
-        const params = new URLSearchParams(window.location.hash.substring(1));
-        const token = params.get("access_token") || "demo-token";
+  <script>
+    function redirectToApp() {
+      const params = new URLSearchParams(window.location.hash.substring(1));
+      const token = params.get("access_token");
+
+      if (token) {
         const url = `myapp://redirect?access_token=${token}`;
         window.location.href = url;
+      } else {
+        alert("No access token found.");
       }
-
-      // Optional: auto-click after short delay (works in Safari/PWA)
-      setTimeout(() => {
-        const btn = document.querySelector("button");
-        if (btn) btn.click();
-      }, 1500);
-    </script>
-  </body>
+    }
+  </script>
+</body>
 </html>
