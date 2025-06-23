@@ -1,38 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Redirecting...</title>
+<html>
+  <head>
+    <title>Open in App</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h3>Redirecting to the app...</h3>
+    <button onclick="redirectToApp()">Open in App</button>
 
-  <script>
-    window.onload = function () {
-      // Extract access_token from URL query if needed
-      const params = new URLSearchParams(window.location.search);
-      const token = params.get("access_token") || "EXAMPLE_TOKEN";
+    <script>
+      function redirectToApp() {
+        const params = new URLSearchParams(window.location.hash.substring(1));
+        const token = params.get("access_token") || "demo-token";
+        const url = `myapp://redirect?access_token=${token}`;
+        window.location.href = url;
+      }
 
-      // Attempt to redirect to the app
-      const appURL = `myapp://redirect?access_token=${token}`;
-      window.location.href = appURL;
-
-      // Optional fallback after timeout
+      // Optional: auto-click after short delay (works in Safari/PWA)
       setTimeout(() => {
-        window.location.href = "https://yourdomain.com/download"; // Optional fallback URL
-      }, 3000);
-    };
-  </script>
-</head>
-<body>
-  <p style="font-family: sans-serif; text-align: center; margin-top: 2em;">
-    Redirecting to the app...
-    <br />
-    If nothing happens, <a id="manualLink" href="#">tap here</a>.
-  </p>
-
-  <script>
-    document.getElementById("manualLink").href =
-      `myapp://redirect?access_token=${new URLSearchParams(window.location.search).get("access_token") || "EXAMPLE_TOKEN"}`;
-  </script>
-</body>
+        const btn = document.querySelector("button");
+        if (btn) btn.click();
+      }, 1500);
+    </script>
+  </body>
 </html>
